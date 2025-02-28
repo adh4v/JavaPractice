@@ -5,11 +5,11 @@ public class Obj {
 	@Override
 	protected void finalize() throws Throwable
 	{
-		System.out.println("Hello");
+		System.out.println(a);
 	}
 	public void disp()
 	{
-		System.out.println(a+1);
+		System.out.println(a++);
 	}
 	public static Obj getInstance()
 	{
