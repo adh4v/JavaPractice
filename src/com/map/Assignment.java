@@ -3,6 +3,7 @@ package com.map;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -86,12 +87,61 @@ class Order
 	}
 }
 public class Assignment {
-	//1.Highest order in a Year
-	public static void getHighestOrderInYear(List<Order> o)
-	{
+	
+	    //1.highest orders in a year
+		public static void highestOrder(List<Order> li)
+		{
+			Optional<Order> ref = li.stream().max(Comparator.comparing(Order :: getQuantity));
+			Order rl = ref.get();
+			System.out.println(rl);
+			Map<Integer, Long> m = li.stream().collect(Collectors.groupingBy(Order :: getYear,Collectors.counting()));
+
+		}
 		
-	}
-	public static void main(String[] args) {
+		// Category wise orders count
+		public static void categoryWiseOrderCount(List<Order> li)
+		{
+			Map<String, Long> m = li.stream().collect(Collectors.groupingBy(Order :: getCategory,Collectors.counting()));
+			System.out.println(m);
+		}
+		
+		//3.Max price from orders
+		public static void maxPrice(List<Order> li)
+		{
+			Optional<Order> o= li.stream().max(Comparator.comparing(Order :: getPrice));
+			Order m = o.get();
+			System.out.println(m.getO_name()+" "+m.getPrice());
+		}
+		
+		//4.Average monthly Spending
+		public static void monthWiseOrder(List<Order> li)
+		{
+			Map<String, List<Order>> mo = li.stream().collect(Collectors.groupingBy(Order::getMonth));
+	        
+		}
+		
+		//5.Min order price
+		public static void minOrderPrice(List<Order> li)
+		{
+			Optional<Order> n = li.stream().min(Comparator.comparing(Order :: getPrice));
+			Order m = n.get();
+			System.out.println(m.getO_name()+" "+m.getPrice());
+		}
+		
+		//6.first and last product purchased
+		public static void fandl(List<Order> li)
+		{
+			List<Order> sortedOrders = li.stream()
+	                                     .sorted(Comparator.comparing(Order::getYear))
+	                                     .collect(Collectors.toList());
+
+	        
+	         System.out.println("First Order: " + sortedOrders.getFirst());
+	         System.out.println("Last Order: " + sortedOrders.getLast());
+	    
+		}
+		
+		public static void main(String[] args) {
 		List<Order> l = new ArrayList<>();
 		
 		l.add(new Order(101,"Ken","Milk",200,10,2021,"April","Erode"));
@@ -104,6 +154,19 @@ public class Assignment {
 		l.add(new Order(125,"Ippo","Drinks",370,3,2023,"December","Chennai"));
 		l.add(new Order(123,"Maki","Fruits",290,5,2023,"June","Tirupur"));
 		l.add(new Order(115,"Kaneki","Electronics",600,3,2024,"May","Erode"));
+		Assignment.highestOrder(l);
+		System.out.println("---------------------------------------------------");
+		Assignment.categoryWiseOrderCount(l);
+		System.out.println("---------------------------------------------------");
+		Assignment.monthWiseOrder(l);
+		System.out.println("---------------------------------------------------");
+		Assignment.minOrderPrice(l);
+		System.out.println("---------------------------------------------------");
+		Assignment.maxPrice(l);
+		System.out.println("---------------------------------------------------");
+		Assignment.highestOrder(l);
+		System.out.println("---------------------------------------------------");
+		Assignment.fandl(l);
 	}
 
 }
